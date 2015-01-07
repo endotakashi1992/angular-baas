@@ -1,4 +1,5 @@
 describe "ngBaas",->
+  
   beforeEach ->
     angular.module 'testNgBaas',['ngBaas']
     .config (baasProvider)->
