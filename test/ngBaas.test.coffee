@@ -2,7 +2,7 @@ describe "ngBaas",->
   beforeEach ->
     angular.module 'testNgBaas',['ngBaas']
     .config (baasProvider)->
-      baasProvider.collection 'user'
+      baasProvider.collection 'users'
     module 'ngBaas','testNgBaas'
   it "shuld exist User",->
     inject (Users)->
