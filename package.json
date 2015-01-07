@@ -19,6 +19,7 @@
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "gulp": "^3.8.10",
+    "gulp-express": "^0.1.4",
     "gulp-nodemon": "^1.0.4"
   },
   "scripts": {
