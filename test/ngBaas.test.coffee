@@ -14,3 +14,9 @@ describe "ngBaas",->
       Users.insert row,(_row)->
         expect(_row.text).toEqual(str)
         done()
+  it "_id is shuld be inclement",(done)->
+    inject (Users)->
+      Users.insert {name:"first"},(first)->
+        Users.insert {name:"second"},(second)->
+          expect(second._id).toEqual(++first._id)
+          done()

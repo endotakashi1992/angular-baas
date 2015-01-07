@@ -39,9 +39,12 @@
   app.post "/api/:resource", (req, res)->
     resource = req.params.resource
     db = createDB(resource)
-    db.insert req.body,(e,doc)->
-      ev.emit "#{resource}:create",(doc)
-      res.send doc
+    db.count {},(e,count)->
+      newDoc = req.body
+      newDoc._id = count++
+      db.insert newDoc,(e,doc)->
+        ev.emit "#{resource}:create",(doc)
+        res.send doc
   app.put "/api/:resource/:_id",(req,res) ->
     resource = req.params.resource
     _id = req.params._id
