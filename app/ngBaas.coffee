@@ -1,4 +1,5 @@
 Set = (array)->
+  
   result = array || []
   result.add = (value)->
     angular.forEach result,(val,key)->

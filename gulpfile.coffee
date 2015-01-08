@@ -25,3 +25,4 @@ gulp.task 'test',['express:start','karma:run'],->
 
 gulp.task 'tdd',['express:start','karma:run'],->
   gulp.watch "api/*.coffee",['express:restart','karma:run']
+  gulp.watch "app/*.coffee",['karma:run']
