@@ -18,12 +18,7 @@
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
-    "gulp": "^3.8.10",
-    "gulp-exec": "^2.1.1",
-    "gulp-express": "^0.1.4",
-    "gulp-log-capture": "0.0.6",
-    "gulp-nodemon": "^1.0.4",
-    "gulp-run": "^1.6.6"
+    "gulp": "^3.8.10"
   },
   "scripts": {
     "start": "node index.js",

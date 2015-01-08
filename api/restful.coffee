@@ -1,4 +1,6 @@
-(->
+module.exports = ->
+  EventEmitter = require('events').EventEmitter
+  _ev = new EventEmitter()
   express = require("express")
   app = express()
   bodyParser = require("body-parser")
@@ -67,6 +69,8 @@
       res.write('data: ' + "HEI!!!!" + ' \n\n')
     , 1000
   app.use(express.static(__dirname + '/public'))
-  app.listen 3000,->
-    console.log "Server start:localhost:3000"
-)()
+  server = app.listen 3000,->
+    _ev.emit 'start'
+    _ev.on 'stop',->
+      server.close()
+  return _ev

@@ -1,2 +1,2 @@
 require('coffee-script/register')
-require('./api/restful.coffee')
+module.exports = require('./api/restful.coffee')()
