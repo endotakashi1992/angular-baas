@@ -1,5 +1,4 @@
 Set = (array)->
-  
   result = array || []
   result.add = (value)->
     angular.forEach result,(val,key)->
@@ -43,12 +42,12 @@ app = angular.module 'ngBaas',[]
               $rootScope.$apply ->
                 result.add JSON.parse(event.data)
             return result
-          findOne:(_id)->
+          findOne:(_id,cb)->
             result = {}
-            $http.get("/api/#{plur}/#{_id}").
-            success (data)->
+            $.get "/api/#{plur}/#{_id}", (data)->
               angular.forEach data,(val,key)->
                 result[key] = val
+              cb(data)
             return result
           insert:(data,cb)->
             result = {}

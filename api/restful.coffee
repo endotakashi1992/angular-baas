@@ -6,12 +6,12 @@ module.exports = ->
   bodyParser = require("body-parser")
   app.use bodyParser.urlencoded(extended: false)
   app.use bodyParser.json()
-
+  app.use(express.static(__dirname + '/public'))
   port = process.env.PORT || 3000
   Datastore = require('nedb')
   collections = {}
   createDB = (name)->
-    return collections[name] || collections[name] = new Datastore({filename:".tmp/data/#{name}.json",autoload:true})
+    return collections[name] || collections[name] = new Datastore()
 
   EventEmitter = require('events').EventEmitter
   ev = new EventEmitter
@@ -33,7 +33,7 @@ module.exports = ->
       db.findOne query,(e,doc)->
         res.write('data: ' + JSON.stringify(doc) + ' \n\n')
   app.get "/api/:resource/:_id", (req, res) ->
-    _id = req.params._id
+    _id = Number(req.params._id)
     resource = req.params.resource
     db = createDB(resource)
     db.findOne {_id:_id},(e,doc)->
@@ -43,7 +43,7 @@ module.exports = ->
     db = createDB(resource)
     db.count {},(e,count)->
       newDoc = req.body
-      newDoc._id = count++
+      newDoc._id = count + 1
       db.insert newDoc,(e,doc)->
         ev.emit "#{resource}:create",(doc)
         res.send doc
@@ -59,16 +59,6 @@ module.exports = ->
     db = createDB(resource)
     db.remove req.body,(e,d)->
       res.send d
-  app.get "/stream",(req,res)->
-    res.writeHead 200,
-      "Content-Type": "text/event-stream"
-      "Cache-Control": "no-cache"
-      Connection: "keep-alive"
-    res.write "\n"
-    setInterval ->
-      res.write('data: ' + "HEI!!!!" + ' \n\n')
-    , 1000
-  app.use(express.static(__dirname + '/public'))
   server = app.listen 3000,->
     _ev.emit 'start'
     _ev.on 'stop',->

@@ -18,11 +18,12 @@ gulp.task 'karma:run',(done)->
   karma.server.start
     configFile: __dirname + '/karma.conf.coffee'
     singleRun: true
-  ,done
+  ,->
+    done()
 
 gulp.task 'test',['express:start','karma:run'],->
   process.exit()
 
 gulp.task 'tdd',['express:start','karma:run'],->
   gulp.watch "api/*.coffee",['express:restart','karma:run']
-  gulp.watch "app/*.coffee",['karma:run']
+  gulp.watch ["app/*.coffee","test/*.coffee"],['karma:run']
