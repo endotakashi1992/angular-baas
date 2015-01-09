@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
-    "gulp": "^3.8.10"
+    "gulp": "^3.8.10",
+    "request": "^2.51.0"
   },
   "scripts": {
     "start": "node index.js",

@@ -1,19 +1,4 @@
-Set = (array)->
-  result = array || []
-  result.add = (value)->
-    angular.forEach result,(val,key)->
-      if val._id == value._id
-        result.pop(key)
-    result.push value
-  return result
-dump = (obj)->
-  if !obj
-    return ""
-  str = "?"
-  for key of obj
-    str += "&"  unless str is ""
-    str += key + "=" + obj[key]
-  return str
+
 app = angular.module 'ngBaas',[]
 .provider 'baas',($compileProvider,$provide)->
   {

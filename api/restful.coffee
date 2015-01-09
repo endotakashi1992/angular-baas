@@ -32,12 +32,14 @@ module.exports = ->
       query._id = data._id
       db.findOne query,(e,doc)->
         res.write('data: ' + JSON.stringify(doc) + ' \n\n')
+
   app.get "/api/:resource/:_id", (req, res) ->
     _id = Number(req.params._id)
     resource = req.params.resource
     db = createDB(resource)
     db.findOne {_id:_id},(e,doc)->
       res.send doc
+
   app.post "/api/:resource", (req, res)->
     resource = req.params.resource
     db = createDB(resource)
@@ -47,17 +49,20 @@ module.exports = ->
       db.insert newDoc,(e,doc)->
         ev.emit "#{resource}:create",(doc)
         res.send doc
+        
   app.put "/api/:resource/:_id",(req,res) ->
     resource = req.params.resource
-    _id = req.params._id
     db = createDB(resource)
-    db.update {_id:_id},req.body,(e,d)->
-      res.send d
-  app.delete "/api/:resource",(req,res) ->
-    _id = req.params._id
+    _id = Number(req.params._id)
+    db.remove req.body,(e,d)->
+      db.insert req.body,(e,doc)->
+        res.send doc
+
+  app.delete "/api/:resource/:_id",(req,res) ->
+    _id = Number(req.params._id)
     resource = req.params.resource
     db = createDB(resource)
-    db.remove req.body,(e,d)->
+    db.remove {_id:_id},(e,d)->
       res.send d
   server = app.listen 3000,->
     _ev.emit 'start'
