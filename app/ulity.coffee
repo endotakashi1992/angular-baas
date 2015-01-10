@@ -1,3 +1,11 @@
+Doc = (resource)->
+  doc = {}
+  doc._set = (_data)->
+    angular.forEach _data,(val,key)->
+      doc[key] = val
+  doc.save = ->
+    $.put "/api/#{resource}/#{this._id}"
+  doc
 Set = (array)->
   result = array || []
   result.add = (value)->

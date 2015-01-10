@@ -27,18 +27,16 @@ app = angular.module 'ngBaas',[]
                 result.add JSON.parse(event.data)
             return result
           findOne:(_id,cb)->
-            result = {}
+            doc = Doc(plur)
             $.get "/api/#{plur}/#{_id}", (data)->
-              angular.forEach data,(val,key)->
-                result[key] = val
-              cb data if typeof cb isnt "undefined"
-            return result
+              doc._set(data)
+              cb doc if typeof cb isnt "undefined"
+            doc
           insert:(data,cb)->
-            result = {}
+            doc = Doc(plur)
             $.post "/api/#{plur}",data,(_data)->
-              angular.forEach _data,(val,key)->
-                result[key] = val
-              cb(_data) if typeof cb isnt "undefined"
-            return result
+              doc._set(_data)
+              cb(doc) if typeof cb isnt "undefined"
+            doc
         }
   }
