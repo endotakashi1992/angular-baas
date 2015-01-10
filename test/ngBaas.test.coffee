@@ -27,3 +27,11 @@ describe "ngBaas",->
     ,1000
   it "shuld be .save()",->
     expect(inserted.save).toBeDefined()
+  it "shuld be .save() and PUT",(done)->
+    inserted.text = String new Date()
+    inserted.save()
+    setTimeout ->
+      Users.findOne inserted._id,(_finded)->
+        expect(_finded.text).toEqual(inserted.text)
+        done()
+    ,1000
