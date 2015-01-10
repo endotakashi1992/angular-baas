@@ -1,4 +1,3 @@
-
 app = angular.module 'ngBaas',[]
 .provider 'baas',($compileProvider,$provide)->
   {
@@ -32,14 +31,14 @@ app = angular.module 'ngBaas',[]
             $.get "/api/#{plur}/#{_id}", (data)->
               angular.forEach data,(val,key)->
                 result[key] = val
-              cb(data)
+              cb data if typeof cb isnt "undefined"
             return result
           insert:(data,cb)->
             result = {}
             $.post "/api/#{plur}",data,(_data)->
               angular.forEach _data,(val,key)->
                 result[key] = val
-              cb(_data)
+              cb(_data) if typeof cb isnt "undefined"
             return result
         }
   }
