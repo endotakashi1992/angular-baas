@@ -19,9 +19,9 @@ app = angular.module 'ngBaas',[]
       $provide.factory plur_cap,($http,$rootScope)->
         {
           find:(query)->
-            result = Set()
             query_str = dump query
             es = new EventSource("/api/#{plur}#{query_str}")
+            result = Set([],es)
             es.addEventListener "message", (event) ->
               $rootScope.$apply ->
                 result.add JSON.parse(event.data)

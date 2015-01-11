@@ -35,3 +35,9 @@ describe "ngBaas",->
         expect(_finded.text).toEqual(inserted.text)
         done()
     ,1000
+  it "shuld be find(),close()",(done)->
+    users = Users.find()
+    setTimeout ->
+      expect(users.close).toBeDefined()
+      done()
+    ,1000

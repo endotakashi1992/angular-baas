@@ -6,8 +6,11 @@ Doc = (resource)->
   doc.save = ->
     $.put "/api/#{resource}/#{this._id}"
   doc
-Set = (array)->
+Set = (array,es)->
   result = array || []
+  result.close = ->
+    es.close()
+    "close"
   result.add = (value)->
     angular.forEach result,(val,key)->
       if val._id == value._id
