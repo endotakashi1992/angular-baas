@@ -1,5 +1,6 @@
 describe "ngBaas",->
   inserted = undefined
+  users = undefined
   beforeEach (done)->
     angular.module 'testNgBaas',['ngBaas']
     .config (baasProvider)->
@@ -10,9 +11,11 @@ describe "ngBaas",->
       sample = 
         text:String(new Date())
       window.Users = Users
-      _inserted = Users.insert sample,(_inserted)->
-        inserted = _inserted
+      users = Users.find()
+      inserted = Users.insert sample,(_inserted)->
         done()
+  afterEach ->
+    users.close()
   it "shuld be .insert",->
     expect(inserted).toBeDefined()
   it "shuld be findOne",(done)->
@@ -24,7 +27,7 @@ describe "ngBaas",->
     setTimeout ->
       expect(u._id).toEqual(inserted._id)
       done()
-    ,1000
+    ,500
   it "shuld be .save()",->
     expect(inserted.save).toBeDefined()
   it "shuld be .save() and PUT",(done)->
@@ -34,10 +37,19 @@ describe "ngBaas",->
       Users.findOne inserted._id,(_finded)->
         expect(_finded.text).toEqual(inserted.text)
         done()
-    ,1000
+    ,500
   it "shuld be find(),close()",(done)->
-    users = Users.find()
     setTimeout ->
       expect(users.close).toBeDefined()
       done()
-    ,1000
+    ,500
+  it "shuld be users[0]",(done)->
+    setTimeout ->
+      expect(users[0]).toBeDefined()
+      done()
+    ,500
+  it "shuld be save()",(done)->
+    setTimeout ->
+      expect(users[0].save).toBeDefined()
+      done()
+    ,500

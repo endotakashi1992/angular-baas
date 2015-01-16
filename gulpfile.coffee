@@ -1,7 +1,15 @@
 gulp = require('gulp')
 karma = require('karma')
 path = require 'path'
+coffee = require 'gulp-coffee'
+concat = require 'gulp-concat' 
 express = undefined
+
+gulp.task 'dist',->
+  gulp.src 'app/**/*.coffee'
+  .pipe coffee()
+  .pipe concat 'angular-baas.js'
+  .pipe gulp.dest 'dist'
 
 gulp.task 'express:start', (done)->
   express = require path.resolve('index.js')

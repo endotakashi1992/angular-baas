@@ -4,6 +4,7 @@
   "authors": [
     "endotakashi1992 <endotakashi1992@gmail.com>"
   ],
+  "main":"dist/angular-baas.js",
   "license": "MIT",
   "ignore": [
     "**/.*",

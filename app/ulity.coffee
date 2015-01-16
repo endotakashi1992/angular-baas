@@ -1,5 +1,5 @@
-Doc = (resource)->
-  doc = {}
+Doc = (resource,val)->
+  doc = val || {}
   doc._set = (_data)->
     angular.forEach _data,(val,key)->
       doc[key] = val
