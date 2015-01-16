@@ -12,7 +12,7 @@ gulp.task 'dist',->
   .pipe gulp.dest 'dist'
 
 gulp.task 'express:start', (done)->
-  express = require path.resolve('index.js')
+  express = require(path.resolve('index.js'))()
   delete require.cache[path.resolve('index.js')]
   express.on 'start',done
 
